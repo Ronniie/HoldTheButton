@@ -70,6 +70,7 @@ let isHolding = false;
 let buttonText = holdButton.querySelector('span');
 let messageInterval;
 let lastMessageTime = 0;
+let finalTime = 0;
 const MESSAGE_UPDATE_INTERVAL = 3000; // 3 seconds between messages
 
 // Random messages while holding
@@ -241,8 +242,8 @@ function formatTime(ms) {
 // Update timer display
 function updateTimer() {
     const currentTime = Date.now();
-    const elapsedTime = currentTime - startTime;
-    timer.textContent = formatTime(elapsedTime);
+    finalTime = currentTime - startTime;
+    timer.textContent = formatTime(finalTime);
 }
 
 // Get random message from array
@@ -264,9 +265,8 @@ function stopHold() {
         isHolding = false;
         clearInterval(timerInterval);
         clearInterval(messageInterval);
-        const finalTime = Date.now() - startTime;
         
-        // Show result
+        // Show result using the final time we already calculated
         result.textContent = `${formatTime(finalTime)} - ${getRandomMessage(resultMessages)}`;
         resultContainer.classList.add('show');
         
