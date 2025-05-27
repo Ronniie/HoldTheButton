@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoldThisButton | How long can you hold it?</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://upload.wikimedia.org/wikipedia/commons/c/c0/Perspective-Button-Search-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://upload.wikimedia.org/wikipedia/commons/c/c0/Perspective-Button-Search-icon.png">
+    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/c/c0/Perspective-Button-Search-icon.png">
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="msapplication-TileColor" content="#0f172a">
+    <meta name="msapplication-navbutton-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0f172a">
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="HoldThisButton | How long can you hold it?">
+    <meta name="description" content="Test your patience and endurance with our button-holding challenge. How long can you hold the button?">
+    <meta name="keywords" content="button challenge, hold button, patience test, endurance test">
+    <meta name="author" content="Ronniie">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HoldThisButton | How long can you hold it?">
+    <meta property="og:description" content="Test your patience and endurance with our button-holding challenge. How long can you hold the button?">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/c/c0/Perspective-Button-Search-icon.png">
+    <meta property="og:site_name" content="HoldThisButton">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="HoldThisButton | How long can you hold it?">
+    <meta property="twitter:description" content="Test your patience and endurance with our button-holding challenge. How long can you hold the button?">
+    <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/c/c0/Perspective-Button-Search-icon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- particles container -->
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <h1 class="title">HoldThisButton</h1>
+        <div class="message-container">
+            <span id="message" class="message">Ready to test your patience?</span>
+        </div>
+        
+        <div class="timer-container">
+            <span id="timer" class="timer">0.00s</span>
+        </div>
+        
+        <button id="holdButton" class="hold-button">
+            <span>Hold Me</span>
+        </button>
+        
+        <div class="result-container" id="resultContainer">
+            <span id="result" class="result"></span>
+        </div>
+        
+        <div class="footer">
+            <span class="website">whatsthatbutton.ronniie.dev</span>
+        </div>
+    </div>
+    
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
