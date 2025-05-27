@@ -68,6 +68,9 @@ let startTime;
 let timerInterval;
 let isHolding = false;
 let buttonText = holdButton.querySelector('span');
+let messageInterval;
+let lastMessageTime = 0;
+const MESSAGE_UPDATE_INTERVAL = 3000; // 3 seconds between messages
 
 // Random messages while holding
 const holdingMessages = [
@@ -106,7 +109,7 @@ const holdingMessages = [
     "Every second, you enter deeper legend.",
     "You may be achieving enlightenment.",
     "This is your legacy now.",
-    "You clearly don’t fear cramps.",
+    "You clearly don't fear cramps.",
     "Heroes don't always wear capes.",
     "I'm speechless... you're not.",
     "You're holding like the Wi-Fi signal depends on it.",
@@ -116,7 +119,7 @@ const holdingMessages = [
     "This isn't even your final form.",
     "The simulation is glitching just watching you.",
     "You're becoming folklore.",
-    "You’ve reached the point of no return.",
+    "You've reached the point of no return.",
     "You broke the give-up meter.",
     "You outlasted my motivational quotes.",
     "Are you aiming for the Guinness World Record?",
@@ -128,21 +131,21 @@ const holdingMessages = [
     "Existential crises start here.",
     "You're challenging the laws of patience.",
     "Your willpower could power a small town.",
-    "You're so deep in, I can’t let you stop.",
+    "You're so deep in, I can't let you stop.",
     "This is how digital devotion looks.",
-    "You’ll need a recovery arc after this.",
-    "Even I’m nervous for you.",
-    "You’ve reached ‘overachiever’ mode.",
+    "You'll need a recovery arc after this.",
+    "Even I'm nervous for you.",
+    "You've reached 'overachiever' mode.",
     "You're passing into the mythos now.",
     "The button might be scared of you.",
     "I think you just invented a new sport.",
     "This is your endurance saga.",
     "Still holding. The stars are aligning.",
-    "You’re one hold away from godhood.",
+    "You're one hold away from godhood.",
     "Your thumb deserves its own biography.",
     "There are monks less dedicated than this.",
-    "You’re holding onto greatness—literally.",
-    "You’ve entered the Matrix hold level.",
+    "You're holding onto greatness—literally.",
+    "You've entered the Matrix hold level.",
     "Reality checks in... still holding.",
     "Are your bones okay?",
     "You're breaking records in another dimension.",
@@ -160,14 +163,14 @@ const holdingMessages = [
     "You're distorting time with your will.",
     "You're holding like a black hole grips light.",
     "You may have just glitched reality.",
-    "You’re now part of the code.",
-    "A statue couldn’t keep up with you.",
-    "You’re outperforming machines.",
+    "You're now part of the code.",
+    "A statue couldn't keep up with you.",
+    "You're outperforming machines.",
     "Your name shall echo through holding halls.",
-    "Still here? You’re writing digital lore.",
+    "Still here? You're writing digital lore.",
     "This is holdvana. Welcome.",
     "If there was a throne, you'd sit on it.",
-    "You’ve held longer than most people dream.",
+    "You've held longer than most people dream.",
     "Reality salutes your grip.",
     "You're in another timeline now.",
     "I hope this gets written in history books.",
@@ -176,112 +179,59 @@ const holdingMessages = [
     "A galaxy was born during this hold."
 ];
 
-
 // Snarky result messages
 const resultMessages = [
-    "Did you ascend while holding?",
-    "That was a full spiritual journey.",
-    "You defied all known limits.",
-    "Your phone thinks you're stuck.",
-    "I need to sit down after watching that.",
-    "You may have entered another plane.",
-    "That was less of a hold, more of a legend.",
-    "No one will believe this—print the T-shirt.",
-    "What sorcery is this?",
-    "Please seek professional help... for awesomeness.",
+    "You should screenshot this as no one will believe you",
+    "That's... actually pretty impressive",
+    "Did you use tape or something?",
+    "Your finger must be numb by now",
+    "That's a new world record... probably",
+    "Are you okay? That's a long time",
+    "Your patience is... concerning",
+    "Did you fall asleep?",
+    "That's dedication right there",
+    "Your finger deserves a medal",
     "You have a new identity now: The Holder.",
     "Statues have nothing on you.",
-    "I’m 99% sure you transcended reality.",
+    "I'm 99% sure you transcended reality.",
     "Was this a dare? A quest? A destiny?",
     "You're a holding deity now.",
-    "Next step: documentary film.",
-    "Do you even feel your finger anymore?",
-    "You broke my internal timer!",
-    "You passed the test... that no one asked for.",
-    "That was the digital version of a marathon.",
-    "I'm getting jealous of your finger strength.",
-    "You've set a precedent for future generations.",
-    "This is your superhero origin story.",
-    "That hold was practically a time capsule.",
-    "You earned honorary screen rights.",
     "I ran out of congratulations halfway through.",
     "You need a cape and a trophy.",
-    "You’ve been upgraded to Ultra User.",
+    "You've been upgraded to Ultra User.",
     "Is it over? Or is it just the beginning?",
     "That wasn't holding, that was history-making.",
-    "The universe blinked. You didn’t.",
+    "The universe blinked. You didn't.",
     "You just changed the definition of patience.",
     "You shattered the digital fourth wall.",
     "You deserve a monument in an app store.",
     "I hope your battery held as well as you.",
-    "My circuits can’t process that level of commitment.",
+    "My circuits can't process that level of commitment.",
     "I'm rethinking reality after that.",
     "That wasn't a test. That was a declaration.",
-    "This hold deserves an NFT.",
-    "Award yourself a nap. A long one.",
-    "You probably warped time and space.",
-    "Someone get this user a medal—stat!",
-    "You've redefined what 'long press' means.",
-    "This is now your personality trait.",
-    "Are your fingerprints still intact?",
-    "That was a saga. A true epic.",
-    "You won. Whatever this was, you won.",
-    "Your finger now has legendary status.",
-    "This app will remember you forever.",
-    "You held so long I started to worry.",
-    "You should charge admission to your skill.",
-    "You were holding more than a button—you held fate.",
-    "You broke my snark barrier. Respect.",
-    "Your future memoir starts with this.",
-    "I bow to your resolve.",
-    "I ran out of excuses to doubt you.",
-    "I don't even have jokes left—just awe.",
-    "Holding like that? That's science fiction.",
-    "This deserves a museum exhibit.",
     "Did your soul temporarily exit your body?",
     "You unlocked the ancient holding technique.",
-    "Reality bent. You didn’t.",
+    "Reality bent. You didn't.",
     "This is beyond mortal comprehension.",
     "Are you part machine?",
     "The screen now fears you.",
     "That was pure digital sorcery.",
-    "You’ve crossed into myth.",
+    "You've crossed into myth.",
     "People will whisper your time in awe.",
     "This achievement deserves music.",
-    "You broke a record and maybe some bones.",
-    "Epic doesn't begin to cover it.",
-    "Do you feel different now?",
-    "You need a certificate for that.",
-    "Some say you're still holding... spiritually.",
-    "That was endurance theater.",
-    "The button says thank you... and sorry.",
-    "You time-traveled with sheer determination.",
-    "You deserve a monument and a break.",
-    "You made boredom bow to you.",
     "That was uncharted excellence.",
     "You deserve a cinematic universe.",
-    "You’re now part of the lore.",
+    "You're now part of the lore.",
     "You outlasted reason itself.",
     "I need to lie down from watching.",
-    "Finger print? More like finger legend.",
-    "You made me believe in magic again.",
-    "You crushed expectations with your thumb.",
-    "I hereby knight you: Sir Hold-a-lot.",
-    "You earned bragging rights forever.",
-    "This goes in your résumé.",
-    "You and the button had a moment.",
-    "The button cried when you let go.",
-    "That was hold-fu mastery.",
-    "I need to recalibrate reality.",
     "The internet will remember this.",
     "That was a digital exorcism of limits.",
-    "Legends say you’re still glowing.",
+    "Legends say you're still glowing.",
     "I got emotional. Well done.",
     "You made the impossible... look held.",
-    "I’m impressed. And I’m code.",
+    "I'm impressed. And I'm code.",
     "This moment will echo through apps forever."
 ];
-
 
 // Format time
 function formatTime(ms) {
@@ -308,31 +258,12 @@ function changeMessage(newMessage) {
     message.classList.add('changed');
 }
 
-// Start holding
-holdButton.addEventListener('mousedown', () => {
-    if (!isHolding) {
-        isHolding = true;
-        startTime = Date.now();
-        timerInterval = setInterval(updateTimer, 10);
-        resultContainer.classList.remove('show');
-        buttonText.textContent = "Holding...";
-        
-        // Start random messages
-        const messageInterval = setInterval(() => {
-            if (isHolding) {
-                changeMessage(getRandomMessage(holdingMessages));
-            } else {
-                clearInterval(messageInterval);
-            }
-        }, 3000);
-    }
-});
-
-// Stop holding
-holdButton.addEventListener('mouseup', () => {
+// Stop the hold
+function stopHold() {
     if (isHolding) {
         isHolding = false;
         clearInterval(timerInterval);
+        clearInterval(messageInterval);
         const finalTime = Date.now() - startTime;
         
         // Show result
@@ -343,7 +274,41 @@ holdButton.addEventListener('mouseup', () => {
         message.textContent = "Ready to try again?";
         buttonText.textContent = "Hold Me";
     }
+}
+
+// Start holding
+holdButton.addEventListener('mousedown', () => {
+    if (!isHolding) {
+        isHolding = true;
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 10);
+        resultContainer.classList.remove('show');
+        buttonText.textContent = "Holding...";
+        lastMessageTime = Date.now();
+        
+        // Start random messages
+        messageInterval = setInterval(() => {
+            if (isHolding) {
+                const currentTime = Date.now();
+                if (currentTime - lastMessageTime >= MESSAGE_UPDATE_INTERVAL) {
+                    changeMessage(getRandomMessage(holdingMessages));
+                    lastMessageTime = currentTime;
+                }
+            } else {
+                clearInterval(messageInterval);
+            }
+        }, MESSAGE_UPDATE_INTERVAL);
+    }
 });
+
+// Stop holding
+holdButton.addEventListener('mouseup', stopHold);
+
+// Stop when mouse leaves the button
+holdButton.addEventListener('mouseleave', stopHold);
+
+// Stop when window loses focus
+window.addEventListener('blur', stopHold);
 
 // Prevent context menu on long press
 holdButton.addEventListener('contextmenu', (e) => {
@@ -359,4 +324,10 @@ holdButton.addEventListener('touchstart', (e) => {
 holdButton.addEventListener('touchend', (e) => {
     e.preventDefault();
     holdButton.dispatchEvent(new MouseEvent('mouseup'));
+});
+
+// Stop when touch moves away from button
+holdButton.addEventListener('touchcancel', (e) => {
+    e.preventDefault();
+    stopHold();
 }); 
